@@ -23,6 +23,7 @@ class User extends Authenticatable
         'Alamat',
         'JK',
         'tgl_lahir',
+        'phone',
         'password',
     ];
 

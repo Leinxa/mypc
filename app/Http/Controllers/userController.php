@@ -5,6 +5,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
+use Laravel\Sanctum\PersonalAccessToken;
+
 class userController extends Controller
 {
     public function registerApi(Request $request){
@@ -23,6 +25,28 @@ class userController extends Controller
                 'message' => "success",
                  'data' => $user,
                  'token'=>$token
+             ], 200);
+        }
+
+        public function registerProfile(Request $request){
+            $request->validate([
+                'name' => 'required',
+                'JK' => 'required',
+                'Alamat' => 'required',
+                'phone' => 'required',
+                'tgl_lahir' => 'required',
+            ]);
+    
+            $user = User::where('id',$request->user()->id)->update([
+                'name' => $request->name,
+                'JK' => $request->JK,
+                'Alamat' => $request->Alamat,
+                'phone' => $request->phone,
+                'tgl_lahir' => $request->tgl_lahir,
+            ]);
+             return response()->json([
+                'status'=>200,
+                'message' => "success",
              ], 200);
         }
 
